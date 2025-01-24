@@ -190,48 +190,43 @@
     }
 
     function calculateColorFromValues() {
-      const nominal = parseFloat(document.getElementById("nominal").value);
-      const min = parseFloat(document.getElementById("min").value);
-      const max = parseFloat(document.getElementById("max").value);
+  const nominal = parseFloat(document.getElementById("nominal").value);
 
-      if (isNaN(nominal) || isNaN(min) || isNaN(max)) return;
+  if (isNaN(nominal) || nominal <= 0) {
+    document.getElementById("color-result").innerHTML = `<p>Please enter a valid resistance value.</p>`;
+    return;
+  }
 
-      // Calculate tolerance percentage
-      const tolerance = Math.round(((max - nominal) / nominal) * 100);
+  const tolerance = parseFloat(document.getElementById("tolerance").value || 20);
 
-      // Ensure tolerance bands are correct (1%, 2%, 5%, 10%, 20%)
-      let toleranceBand;
-      if (tolerance <= 1) {
-        toleranceBand = 1; // Brown (±1%)
-      } else if (tolerance <= 2) {
-        toleranceBand = 2; // Red (±2%)
-      } else if (tolerance <= 5) {
-        toleranceBand = 5; // Gold (±5%)
-      } else if (tolerance <= 10) {
-        toleranceBand = 10; // Silver (±10%)
-      } else {
-        toleranceBand = 20; // No band (±20%)
-      }
+  // Calculate significant figures and multiplier
+  const exponent = Math.floor(Math.log10(nominal));
+  const normalizedValue = nominal / Math.pow(10, exponent);
+  const firstDigit = Math.floor(normalizedValue);
+  const secondDigit = Math.floor((normalizedValue - firstDigit) * 10);
+  const multiplier = Math.pow(10, exponent - 1);
 
-      // Calculate color bands
-      const firstDigit = Math.floor(nominal / 10);
-      const secondDigit = nominal % 10;
-      const multiplier = Math.pow(10, Math.floor(Math.log10(nominal / 10)));
+  // Get tolerance color
+  const toleranceBand = tolerance === 1 ? "brown" :
+                        tolerance === 2 ? "red" :
+                        tolerance === 5 ? "gold" :
+                        tolerance === 10 ? "silver" :
+                        "transparent";
 
-      // Set the colors based on the calculated values
-      document.getElementById("color1-result").style.backgroundColor = getColorForDigit(firstDigit);
-      document.getElementById("color2-result").style.backgroundColor = getColorForDigit(secondDigit);
-      document.getElementById("color3-result").style.backgroundColor = getColorForMultiplier(multiplier);
-      document.getElementById("color4-result").style.backgroundColor = getColorForTolerance(toleranceBand);
+  // Set band colors
+  document.getElementById("color1-result").style.backgroundColor = getColorForDigit(firstDigit);
+  document.getElementById("color2-result").style.backgroundColor = getColorForDigit(secondDigit);
+  document.getElementById("color3-result").style.backgroundColor = getColorForMultiplier(multiplier);
+  document.getElementById("color4-result").style.backgroundColor = toleranceBand;
 
-      // Display the result
-      document.getElementById("color-result").innerHTML = `
-        <h3>Calculated Color Code</h3>
-        <p>Nominal Resistance: ${nominal} Ω</p>
-        <p>Min: ${min} Ω, Max: ${max} Ω</p>
-        <p>Tolerance: ±${toleranceBand}%</p>
-      `;
-    }
+  // Display the result
+  document.getElementById("color-result").innerHTML = `
+    <h3>Calculated Color Code</h3>
+    <p>Resistance: ${nominal} Ω</p>
+    <p>Tolerance: ±${tolerance}%</p>
+    <p>Color Bands: ${getColorForDigit(firstDigit)}, ${getColorForDigit(secondDigit)}, ${getColorForMultiplier(multiplier)}, ${toleranceBand === "transparent" ? "No Band" : toleranceBand}</p>
+  `;
+}
 
     function getColorForDigit(digit) {
       const colors = ["black", "brown", "red", "orange", "yellow", "green", "blue", "violet", "gray", "white"];
