@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tabbed Interface with Iframe</title>
+    <title>Jez Cortez Website</title>
     <style>
         /* General Styles */
         body {
@@ -14,33 +14,97 @@
             color: #333;
         }
 
-        /* Tabs Styling */
-        .tabs {
-            display: flex;
+        /* Header and Menu Styling */
+        header {
             background-color: #444;
-            overflow: hidden;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
-        .tabs button {
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .menu {
+            position: relative;
+            display: inline-block;
+        }
+
+        .menu-button {
             background-color: #444;
             color: white;
             border: none;
-            padding: 14px 20px;
+            padding: 10px 20px;
             cursor: pointer;
-            transition: background-color 0.3s, color 0.3s;
-            flex: 1;
-            text-align: center;
             font-size: 16px;
+            transition: background-color 0.3s;
         }
 
-        .tabs button:hover {
+        .menu-button:hover {
             background-color: #555;
         }
 
-        .tabs button.active {
-            background-color: #666;
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content button {
+            color: #333;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            width: 100%;
+            text-align: left;
+            border: none;
+            background: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .dropdown-content button:hover {
+            background-color: #ddd;
+        }
+
+        .menu:hover .dropdown-content {
+            display: block;
+        }
+
+        .category-title {
             font-weight: bold;
+            background-color: #eee;
+            padding: 10px 16px;
+            cursor: default;
+            color: #333; /* Dark gray color for visibility */
+        }
+
+        .category-title:hover {
+            background-color: #eee; /* Keep background consistent */
+        }
+
+        /* Landing Page Styling */
+        .landing-page {
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .landing-page h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .landing-page p {
+            font-size: 18px;
+            color: #666;
         }
 
         /* Tab Content Styling */
@@ -69,14 +133,21 @@
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            .tabs button {
-                padding: 10px;
-                font-size: 14px;
+            header {
+                flex-direction: column;
+                align-items: flex-start;
             }
 
-            .tab-content {
-                margin: 10px;
-                padding: 15px;
+            .menu {
+                margin-top: 10px;
+            }
+
+            .landing-page h1 {
+                font-size: 28px;
+            }
+
+            .landing-page p {
+                font-size: 16px;
             }
 
             iframe {
@@ -87,40 +158,60 @@
     <script>
         function openTab(tabName) {
             const tabContents = document.querySelectorAll('.tab-content');
-            const tabButtons = document.querySelectorAll('.tabs button');
+            const landingPage = document.querySelector('.landing-page');
 
             tabContents.forEach(content => content.classList.remove('active'));
-            tabButtons.forEach(button => button.classList.remove('active'));
+            landingPage.style.display = 'none'; // Hide landing page
 
-            document.getElementById(tabName).classList.add('active');
-            document.querySelector(`button[data-tab="${tabName}"]`).classList.add('active');
+            if (tabName === 'landing') {
+                landingPage.style.display = 'block'; // Show landing page
+            } else {
+                document.getElementById(tabName).classList.add('active');
+            }
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Set default active tab
-            openTab('tab1');
+            // Set default active tab (landing page)
+            openTab('landing');
         });
     </script>
 </head>
 <body>
-    <div class="tabs">
-        <button class="active" data-tab="tab1" onclick="openTab('tab1')">Tab 1</button>
-        <button data-tab="tab2" onclick="openTab('tab2')">Tab 2</button>
-        <button data-tab="tab3" onclick="openTab('tab3')">Tab 3</button>
+    <header>
+        <h1>My Website</h1>
+        <div class="menu">
+            <button class="menu-button">Menu</button>
+            <div class="dropdown-content">
+                <button onclick="openTab('landing')">Home</button>
+                <div class="category-title">Useful</div>
+                <button onclick="openTab('tab1')">Resistor Calculator</button>
+                <div class="category-title">Games</div>
+                <button onclick="openTab('tab2')">GBA Emulator</button>
+                <div class="category-title">Entertainment</div>
+                <button onclick="openTab('tab3')">Tab 3</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Landing Page -->
+    <div class="landing-page">
+        <h1>Welcome to My Website!</h1>
+        <p>Explore the different sections using the menu above.</p>
     </div>
 
-    <div id="tab1" class="tab-content active">
-        <h1>Welcome to Tab 1</h1>
+    <!-- Tab Content -->
+    <div id="tab1" class="tab-content">
+        <h1>Resistor Calculator</h1>
         <iframe src="resistorcalculator.html"></iframe>
     </div>
 
     <div id="tab2" class="tab-content">
-        <h1>Welcome to Tab 2</h1>
+        <h1>GBA Emulator</h1>
         <iframe src="https://bobzgames.github.io/GBA/"></iframe>
     </div>
 
     <div id="tab3" class="tab-content">
-        <h1>Welcome to Tab 3</h1>
+        <h1>Tab 3</h1>
         <p>This is the content of Tab 3.</p>
     </div>
 </body>
