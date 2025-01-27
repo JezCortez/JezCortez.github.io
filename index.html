@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tabbed Interface</title>
+    <title>Tabbed Interface with Iframe</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -36,6 +36,11 @@
         .tab-content.active {
             display: block;
         }
+        iframe {
+            width: 100%;
+            height: 500px; /* Adjust height as needed */
+            border: none;
+        }
     </style>
     <script>
         function openTab(tabName) {
@@ -49,28 +54,7 @@
             document.querySelector(`button[data-tab="${tabName}"]`).classList.add('active');
         }
 
-        function loadTabContent(tabId, filePath) {
-            fetch(filePath)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Failed to load content: ' + response.status);
-                    }
-                    return response.text();
-                })
-                .then(data => {
-                    document.getElementById(tabId).innerHTML = data;
-                })
-                .catch(error => {
-                    document.getElementById(tabId).innerHTML = `<p>Error loading content: ${error.message}</p>`;
-                });
-        }
-
         document.addEventListener('DOMContentLoaded', () => {
-            // Load content for each tab
-            loadTabContent('content-tab1', 'resistorcalculator.html');
-            loadTabContent('content-tab2', 'https://raw.githubusercontent.com/BobzGames/bobzgames.github.io/refs/heads/assets/bruh.html');
-            loadTabContent('content-tab3', 'page3.html');
-
             // Set default active tab
             openTab('tab1');
         });
@@ -85,17 +69,18 @@
 
     <div id="tab1" class="tab-content active">
         <h1>Welcome to Tab 1</h1>
-        <div id="content-tab1">Loading...</div>
+        <iframe src="resistorcalculator.html"></iframe>
     </div>
 
     <div id="tab2" class="tab-content">
         <h1>Welcome to Tab 2</h1>
-        <div id="content-tab2">Loading...</div>
+        <!-- Embed an iframe in Tab 2 -->
+        <iframe src="https://theclashman2.github.io/GBA-Emulator/" width="100%" height="100%" style="border:0;></iframe>
     </div>
 
     <div id="tab3" class="tab-content">
         <h1>Welcome to Tab 3</h1>
-        <div id="content-tab3">Loading...</div>
+        <p>This is the content of Tab 3.</p>
     </div>
 </body>
 </html>
