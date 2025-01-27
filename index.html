@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jez Cortez Website</title>
+    <title>Tabbed Interface with Categorized Menu</title>
     <style>
         /* General Styles */
         body {
@@ -20,7 +20,6 @@
             color: white;
             padding: 10px 20px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
@@ -28,6 +27,7 @@
         header h1 {
             margin: 0;
             font-size: 24px;
+            margin-right: 20px; /* Add space between title and menu */
         }
 
         .menu {
@@ -138,6 +138,10 @@
                 align-items: flex-start;
             }
 
+            header h1 {
+                margin-bottom: 10px; /* Add space between title and menu on small screens */
+            }
+
             .menu {
                 margin-top: 10px;
             }
@@ -178,7 +182,6 @@
 </head>
 <body>
     <header>
-        <h1>My Website</h1>
         <div class="menu">
             <button class="menu-button">Menu</button>
             <div class="dropdown-content">
@@ -191,6 +194,7 @@
                 <button onclick="openTab('tab3')">Tab 3</button>
             </div>
         </div>
+        <h1>My Website</h1>
     </header>
 
     <!-- Landing Page -->
