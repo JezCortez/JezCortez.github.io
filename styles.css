@@ -1,3 +1,4 @@
+
 /* General Styles */
 body {
     font-family: 'Arial', sans-serif;
@@ -39,7 +40,7 @@ header h1 {
     transition: background-color 0.3s;
 }
 
-.menu-button {
+.menu-button:hover {
     background-color: #555;
 }
 
@@ -65,11 +66,11 @@ header h1 {
     transition: background-color 0.3s;
 }
 
-.dropdown-content button {
+.dropdown-content button:hover {
     background-color: #ddd;
 }
 
-.menu .dropdown-content {
+.menu:hover .dropdown-content {
     display: block;
 }
 
