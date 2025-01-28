@@ -191,27 +191,39 @@
 
     function calculateColorFromValues() {
   const nominal = parseFloat(document.getElementById("nominal").value);
+  const min = parseFloat(document.getElementById("min").value);
+  const max = parseFloat(document.getElementById("max").value);
 
-  if (isNaN(nominal) || nominal <= 0) {
-    document.getElementById("color-result").innerHTML = `<p>Please enter a valid resistance value.</p>`;
+  if (isNaN(nominal) || nominal <= 0 || isNaN(min) || isNaN(max)) {
+    document.getElementById("color-result").innerHTML = `<p>Please enter valid resistance values.</p>`;
     return;
   }
 
-  const tolerance = parseFloat(document.getElementById("tolerance").value || 20);
+  // Calculate tolerance
+  const tolerance = ((max - nominal) / nominal) * 100;
 
-  // Calculate significant figures and multiplier
-  const exponent = Math.floor(Math.log10(nominal));
-  const normalizedValue = nominal / Math.pow(10, exponent);
+  // Determine tolerance color
+  const toleranceBand = tolerance <= 1 ? "brown" :
+                        tolerance <= 2 ? "red" :
+                        tolerance <= 5 ? "gold" :
+                        tolerance <= 10 ? "silver" :
+                        "transparent"; // No band for >10% tolerance
+
+  // Calculate significant digits and multiplier
+  let exponent = Math.floor(Math.log10(nominal));
+  let normalizedValue = nominal / Math.pow(10, exponent);
+
+  // Handle cases where normalizedValue is less than 1 (e.g., 0.5 Ω)
+  if (normalizedValue < 1) {
+    exponent -= 1;
+    normalizedValue = nominal / Math.pow(10, exponent);
+  }
+
   const firstDigit = Math.floor(normalizedValue);
   const secondDigit = Math.floor((normalizedValue - firstDigit) * 10);
-  const multiplier = Math.pow(10, exponent - 1);
 
-  // Get tolerance color
-  const toleranceBand = tolerance === 1 ? "brown" :
-                        tolerance === 2 ? "red" :
-                        tolerance === 5 ? "gold" :
-                        tolerance === 10 ? "silver" :
-                        "transparent";
+  // Calculate multiplier
+  const multiplier = Math.pow(10, exponent - 1);
 
   // Set band colors
   document.getElementById("color1-result").style.backgroundColor = getColorForDigit(firstDigit);
@@ -223,7 +235,7 @@
   document.getElementById("color-result").innerHTML = `
     <h3>Calculated Color Code</h3>
     <p>Resistance: ${nominal} Ω</p>
-    <p>Tolerance: ±${tolerance}%</p>
+    <p>Tolerance: ±${tolerance.toFixed(2)}%</p>
     <p>Color Bands: ${getColorForDigit(firstDigit)}, ${getColorForDigit(secondDigit)}, ${getColorForMultiplier(multiplier)}, ${toleranceBand === "transparent" ? "No Band" : toleranceBand}</p>
   `;
 }
