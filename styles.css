@@ -39,7 +39,7 @@ header h1 {
     transition: background-color 0.3s;
 }
 
-.menu-button:hover {
+.menu-button {
     background-color: #555;
 }
 
@@ -65,11 +65,11 @@ header h1 {
     transition: background-color 0.3s;
 }
 
-.dropdown-content button:hover {
+.dropdown-content button {
     background-color: #ddd;
 }
 
-.menu:hover .dropdown-content {
+.menu .dropdown-content {
     display: block;
 }
 
