@@ -210,8 +210,8 @@
                         "transparent"; // No band for >10% tolerance
 
   // Calculate significant digits and multiplier
-  let exponent = Math.floor(Math.log10(nominal));
-  let normalizedValue = nominal / Math.pow(10, exponent);
+  let exponent = Math.floor(Math.log10(nominal)); // Get the exponent
+  let normalizedValue = nominal / Math.pow(10, exponent); // Normalize the value
 
   // Handle cases where normalizedValue is less than 1 (e.g., 0.5 Ω)
   if (normalizedValue < 1) {
@@ -219,8 +219,10 @@
     normalizedValue = nominal / Math.pow(10, exponent);
   }
 
-  const firstDigit = Math.floor(normalizedValue);
-  const secondDigit = Math.floor((normalizedValue - firstDigit) * 10);
+  // Convert normalizedValue to a string to extract digits
+  const normalizedString = normalizedValue.toFixed(2); // Ensure 2 decimal places
+  const firstDigit = parseInt(normalizedString[0]); // First digit
+  const secondDigit = parseInt(normalizedString[2]); // Second digit (after the decimal point)
 
   // Calculate multiplier
   const multiplier = Math.pow(10, exponent - 1);
