@@ -1,4 +1,3 @@
-
 /* General Styles */
 body {
     font-family: 'Arial', sans-serif;
@@ -12,10 +11,13 @@ body {
 header {
     background-color: #444;
     color: white;
-    padding: 40px 20px;
+    padding: 20px; /* Reduced padding for sticky header */
     display: flex;
     align-items: center;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: sticky; /* Make header sticky */
+    top: 0; /* Stick to the top */
+    z-index: 1000; /* Ensure header stays above other content */
 }
 
 header h1 {
@@ -50,7 +52,7 @@ header h1 {
     background-color: #f9f9f9;
     min-width: 160px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    z-index: 1;
+    z-index: 1001; /* Ensure dropdown appears above the sticky header */
 }
 
 .dropdown-content button {
@@ -88,7 +90,7 @@ header h1 {
 
 /* Landing Page Styling */
 .landing-page {
-    padding: 40px 20px;
+    padding: 100px 20px 40px; /* Added padding-top to avoid overlap with sticky header */
     text-align: center;
 }
 
@@ -119,7 +121,7 @@ header h1 {
 /* Iframe Styling */
 iframe {
     width: 100%;
-    height: calc(100vh - 200px); /* Dynamic height based on viewport */
+    height: calc(100vh - 120px); /* Adjusted height to account for sticky header */
     border: none;
     border-radius: 8px;
     margin-top: 10px;
