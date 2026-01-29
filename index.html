@@ -6,115 +6,83 @@
     <title>Jezzy Website</title>
     <link rel="stylesheet" href="styles.css"> <!-- Link to the external CSS file -->
     <script>
-        function openTab(tabName) {
-            const tabContents = document.querySelectorAll('.tab-content');
-            const landingPage = document.querySelector('.landing-page');
-
-            tabContents.forEach(content => content.classList.remove('active'));
-            landingPage.style.display = 'none'; // Hide landing page
-
-            if (tabName === 'landing') {
-                landingPage.style.display = 'block'; // Show landing page
-            } else {
-                document.getElementById(tabName).classList.add('active');
-            }
+        function openExternal(url) {
+          window.open(url, "_blank", "noopener,noreferrer");
         }
-
-        function myFunction(x) {
-            x.classList.toggle("change");
-            const dropdownContent = document.querySelector('.dropdown-content');
-            dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            // Set default active tab (landing page)
-            openTab('landing');
-        });
     </script>
 </head>
 <body>
     <header>
-        <div class="menu">
-            <div class="container" onclick="myFunction(this)">
-                <div class="bar1"></div>
-                <div class="bar2"></div>
-                <div class="bar3"></div>
-            </div>
-            <div class="dropdown-content">
-                <button onclick="openTab('landing')">Home</button>
-                <div class="category-title">Useful</div>
-                <button onclick="openTab('tab1')">Resistor Calculator</button>
-                <button onclick="openTab('tab6')">IP Calculator</button>
-                <button onclick="openTab('tab7')">Python Compiler</button>
-                <button onclick="openTab('tab8')">Haskell Compiler</button>
-                <button onclick="openTab('tab9')">Flutter online</button>
-                <div class="category-title">Games</div>
-                <button onclick="openTab('tab2')">GBA Emulator</button>
-                <div class="category-title">Entertainment</div>
-                <button onclick="openTab('tab3')">KDramaHood</button>
-                <button onclick="openTab('tab4')">Manwha</button>
-                <button onclick="openTab('tab5')">Anime</button>
-                <button onclick="openTab('tab10')">Manga</button>
-            </div>
-        </div>
         <h1>Jezzy Website</h1>
     </header>
 
     <!-- Landing Page -->
     <div class="landing-page">
-        <h1>Welcome to My Website!</h1>
-        <p>Explore the different sections using the menu above.</p>
+
+  <!-- USEFUL -->
+  <h2 class="section-title">Useful</h2>
+  <div class="card-grid">
+
+    <div class="card" onclick="location.href='resistorcalculator.html'">
+      <h3>Resistor Calculator</h3>
+      <p>Calculate resistor color codes</p>
     </div>
 
-    <!-- Tab Content -->
-    <div id="tab1" class="tab-content">
-        <h3>Resistor Calculator</h3>
-        <iframe src="resistorcalculator.html"></iframe>
+    <div class="card" onclick="location.href='ipcalculator.html'">
+      <h3>IP Calculator</h3>
+      <p>Subnet and address tools</p>
     </div>
 
-    <div id="tab2" class="tab-content">
-        <h3>GBA Emulator</h3>
-        <iframe src="https://bobzgames.github.io/GBA/"></iframe>
+    <div class="card" onclick="openExternal('https://www.programiz.com/python-programming/online-compiler/')">
+      <h3>Python Compiler</h3>
+      <p>Online Python execution</p>
     </div>
 
-    <div id="tab3" class="tab-content">
-        <h3>KDramaHood</h3>
-        <iframe src="https://kdramahood.com"></iframe>
+    <div class="card" onclick="openExternal('https://www.tutorialspoint.com/compilers/online-haskell-compiler.htm')">
+      <h3>Haskell Compiler</h3>
+      <p>Compile Haskell online</p>
     </div>
 
-    <div id="tab4" class="tab-content">
-        <h3>Manwha</h3>
-        <iframe src="https://asuracomic.net/"></iframe>
+    <div class="card" onclick="openExternal('https://dartpad.dev')">
+      <h3>Flutter (DartPad)</h3>
+      <p>Flutter playground</p>
     </div>
 
-    <div id="tab5" class="tab-content">
-        <h3>Anime</h3>
-        <iframe src="https://miruro.su/"></iframe>
+  </div>
+
+  <!-- GAMES -->
+  <h2 class="section-title">Games</h2>
+  <div class="card-grid">
+
+    <div class="card" onclick="openExternal('https://bobzgames.github.io/GBA/')">
+      <h3>GBA Emulator</h3>
+      <p>Play GameBoy Advance games</p>
     </div>
 
-    <div id="tab6" class="tab-content">
-        <h3>IP Calculator</h3>
-        <iframe src="ipcalculator.html"></iframe>
+  </div>
+
+  <!-- ENTERTAINMENT -->
+  <h2 class="section-title">Entertainment</h2>
+  <div class="card-grid">
+
+    <div class="card" onclick="openExternal('https://miruro.su')">
+      <h3>Anime (Miruro)</h3>
+      <p>Watch anime online</p>
     </div>
 
-    <div id="tab7" class="tab-content">
-        <h3>Python Compiler</h3>
-        <iframe src="https://www.programiz.com/python-programming/online-compiler/"></iframe>
+    <div class="card" onclick="openExternal('https://asuracomic.net')">
+      <h3>Manhwa (Asura)</h3>
+      <p>Read manhwa online</p>
     </div>
 
-    <div id="tab8" class="tab-content">
-        <h3>Haskell Compiler</h3>
-        <iframe src="https://onecompiler.com/haskell"></iframe>
+    <div class="card" onclick="openExternal('https://roliascan.com')">
+      <h3>Manga (RoliaScan)</h3>
+      <p>Read manga online</p>
     </div>
 
-    <div id="tab9" class="tab-content">
-        <h3>Flutter Compiler</h3>
-        <iframe src="https://dartpad.dev/"></iframe>
-    </div>
+  </div>
 
-    <div id="tab10" class="tab-content">
-        <h3>Manga</h3>
-        <iframe src="https://roliascan.com/"></iframe>
-    </div>
+</div>
+
 </body>
 </html>
